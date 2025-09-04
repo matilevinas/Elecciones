@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impacto Elecciones 2025 - Mercados Argentinos - Alchemy Valores</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #8B7B6B 0%, #A0927E 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .presentation {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            background: white;
+            border-radius: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: slideIn 1s ease-out forwards;
+        }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .slide:nth-child(1) { animation-delay: 0.1s; }
+        .slide:nth-child(2) { animation-delay: 0.2s; }
+        .slide:nth-child(3) { animation-delay: 0.3s; }
+        .slide:nth-child(4) { animation-delay: 0.4s; }
+        .slide:nth-child(5) { animation-delay: 0.5s; }
+        .slide:nth-child(6) { animation-delay: 0.6s; }
+        .slide:nth-child(7) { animation-delay: 0.7s; }
+        .slide:nth-child(8) { animation-delay: 0.8s; }
+        
+        .header {
+            background: linear-gradient(135deg, #D4AF37, #F4D03F);
+            color: white;
+            text-align: center;
+            padding: 60px;
+            position: relative;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 25px;
+        }
+        
+        .header h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+        
+        .header .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 35px;
+        }
+        
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .section-title {
+            background: linear-gradient(135deg, #5D4E3A, #8B7B6B);
+            color: white;
+            padding: 30px 40px;
+            font-size: 1.6rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .content {
+            padding: 50px;
+        }
+        
+        .executive-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .summary-card {
+            background: linear-gradient(135deg, #FFF8E1, #FBF9F3);
+            padding: 35px;
+            border-radius: 20px;
+            border-left: 6px solid #D4AF37;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #D4AF37, #F4D03F);
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+        }
+        
+        .summary-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(212,175,55,0.3);
+        }
+        
+        .summary-card h3 {
+            color: #5D4E3A;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .summary-card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .key-metric {
+            background: linear-gradient(135deg, #D4AF37, #F4D03F);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        
+        .chart-container {
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 50px;
+            align-items: start;
+            margin: 40px 0;
+        }
+        
+        .chart-wrapper {
+            height: 400px;
+            position: relative;
+        }
+        
+        .chart-details {
+            min-width: 300px;
+        }
+        
+        .legend-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 25px;
+            margin: 12px 0;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .legend-item:hover {
+            background: linear-gradient(135deg, #FFF8E1, #FFF3C4);
+            transform: translateX(15px);
+            border-color: #D4AF37;
+        }
+        
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            margin-right: 15px;
+        }
+        
+        .legend-label {
+            display: flex;
+            align-items: center;
+            color: #5D4E3A;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .legend-value {
+            color: #8B7B6B;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        
+        .scenario-card {
+            background: white;
+            border: 3px solid;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scenario-positive {
+            border-color: #4CAF50;
+            background: linear-gradient(135deg, #E8F5E8, #F0FFF0);
+        }
+        
+        .scenario-base {
+            border-color: #D4AF37;
+            background: linear-gradient(135deg, #FFF8E1, #FFF3C4);
+        }
+        
+        .scenario-negative {
+            border-color: #F44336;
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+        }
+        
+        .scenario-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--scenario-color), var(--scenario-color-light));
+        }
+        
+        .scenario-positive::before { --scenario-color: #4CAF50; --scenario-color-light: #81C784; }
+        .scenario-base::before { --scenario-color: #D4AF37; --scenario-color-light: #F4D03F; }
+        .scenario-negative::before { --scenario-color: #F44336; --scenario-color-light: #EF5350; }
+        
+        .scenario-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .scenario-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .scenario-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .scenario-probability {
+            background: rgba(255,255,255,0.8);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .impact-item {
+            background: rgba(255,255,255,0.6);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .impact-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .impact-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .impact-description {
+            font-size: 0.85rem;
+            color: #888;
+        }
+        
+        .timeline-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-left: 4px solid #D4AF37;
+            padding-left: 20px;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: #D4AF37;
+            border-radius: 50%;
+        }
+        
+        .timeline-date {
+            font-weight: 700;
+            color: #D4AF37;
+            min-width: 120px;
+        }
+        
+        .timeline-event {
+            color: #5D4E3A;
+            font-weight: 600;
+        }
+        
+        .risk-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .risk-card {
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .risk-high {
+            background: linear-gradient(135deg, #FFEBEE, #FFCDD2);
+            border-color: #F44336;
+        }
+        
+        .risk-medium {
+            background: linear-gradient(135deg, #FFF8E1, #FFECB3);
+            border-color: #FF9800;
+        }
+        
+        .risk-low {
+            background: linear-gradient(135deg, #E8F5E8, #C8E6C9);
+            border-color: #4CAF50;
+        }
+        
+        .risk-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .risk-level {
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #5D4E3A, #8B7B6B);
+            color: white;
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .disclaimer {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 8px;
+        }
+        
+        .tab-btn {
+            padding: 12px 25px;
+            border: none;
+            background: transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(135deg, #D4AF37, #F4D03F);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 1200px) {
+            .chart-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.5rem; }
+            .executive-summary { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- SLIDE 1: Header -->
+        <div class="slide">
+            <div class="header">
+                <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#FFFFFF"/>
+                            <stop offset="100%" style="stop-color:#FFFFFF"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M20 80 L50 20 L80 80" stroke="url(#logoGradient)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M35 80 L50 50 L65 80" stroke="url(#logoGradient)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <div style="font-size: 1.3rem; margin-bottom: 25px; font-weight: 300; letter-spacing: 3px;">ALCHEMY VALORES</div>
+                <h1>Elecciones Argentina 2025</h1>
+                <div class="subtitle">Impacto en Bonos, Acciones y Tipo de Cambio</div>
+                <div class="badges">
+                    <div class="badge">📊 Análisis de Escenarios</div>
+                    <div class="badge">🗳️ PBA: 7 Sep | Nacional: 26 Oct</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Resumen Ejecutivo -->
+        <div class="slide">
+            <div class="section-title">
+                <span>⚡</span>
+                COYUNTURA CRÍTICA - MERCADOS EN TENSIÓN
+            </div>
+            <div class="content">
+                <div class="executive-summary">
+                    <div class="summary-card">
+                        <h3>📈 Riesgo País - En Máximos</h3>
+                        <p>El EMBI Argentina escaló desde ~560 pb en enero hasta rozar los 900 puntos en septiembre. Aumento del 50% refleja incertidumbre electoral y política cambiaria reciente.</p>
+                        <div class="key-metric">900 pb vs 560 pb (+60%)</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <h3>💰 Bonos Soberanos - Castigo Severo</h3>
+                        <p>GD30 cayó desde 70% del par a ~60% en septiembre. Rendimientos superiores al 15% anual reflejan expectativas de stress crediticio antes de elecciones.</p>
+                        <div class="key-metric">GD30: 60 centavos/dólar</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <h3>📊 Acciones Locales - Valuaciones Deprimidas</h3>
+                        <p>S&P Merval en dólares cae -22% YTD. Múltiplos en mínimos: 7.9x P/E forward vs promedios históricos. Gran parte del pesimismo ya incorporado en precios.</p>
+                        <div class="key-metric">Merval USD: -22% YTD</div>
+                    </div>
+                    
+                    <div class="summary-card">
+                        <h3>💵 Mercado Cambiario - Intervención Activa</h3>
+                        <p>Tesoro vendió USD 156M en agosto para contener dólar. Tipo de cambio oficial en $1.360 cerca del techo de banda (~$1.467). Futuros anticipan 7% adicional hacia octubre.</p>
+                        <div class="key-metric">USD Oficial: $1.360 ARS</div>
+                    </div>
+                </div>
+                
+                <div class="timeline-container">
+                    <h4 style="color: #5D4E3A; margin-bottom: 20px; text-align: center;">🗓️ Cronograma Electoral Clave</h4>
+                    <div class="timeline-item">
+                        <div class="timeline-date">7 Sept 2025</div>
+                        <div class="timeline-event">Elección Provincia de Buenos Aires - Termómetro del apoyo a LLA (~38% del electorado nacional)</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">26 Oct 2025</div>
+                        <div class="timeline-event">Elecciones Legislativas Nacionales - Renovación 50% Diputados y 33% Senado</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Nov 2025</div>
+                        <div class="timeline-event">Definición Agenda Reformas - Capacidad de LLA para profundizar programa liberal</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Escenarios Post-Electorales -->
+        <div class="slide">
+            <div class="section-title">
+                <span>🎭</span>
+                MATRIZ DE ESCENARIOS POST-ELECTORALES
+            </div>
+            <div class="content">
+                <div class="scenario-card scenario-base">
+                    <div class="scenario-header">
+                        <h3 class="scenario-title" style="color: #B8860B;">🟡 ESCENARIO BASE - "Ajustado"</h3>
+                        <div class="scenario-probability" style="color: #B8860B;">45% Probabilidad</div>
+                    </div>
+                    <p><strong>Descripción:</strong> LLA obtiene resultado suficientemente bueno para continuar agenda. Derrota exigua en PBA, victoria o primer puesto nacional en legislativas.</p>
+                    
+                    <div class="impact-grid">
+                        <div class="impact-item">
+                            <div class="impact-label">BONOS SOBERANOS</div>
+                            <div class="impact-value" style="color: #4CAF50;">+15-20%</div>
+                            <div class="impact-description">Riesgo país hacia 600-700 pb</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-label">ACCIONES LOCALES</div>
+                            <div class="impact-value" style="color: #4CAF50;">+20-30%</div>
+                            <div class="impact-description">Rally reevaluación sectores cíclicos</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-label">TIPO DE CAMBIO</div>
+                            <div class="impact-value" style="color: #FF9800;">Controlado</div>
+                            <div class="impact-description">Devaluación gradual acorde inflación</div>
+                        </div>
+                    </div>
+                    
+                    <p style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <strong>Implicaciones:</strong> Continuidad política permite normalización gradual. Acceso a financiamiento externo mejorado. Sectores domésticos (bancos, construcción) se benefician de estabilidad renovada.
+                    </p>
+                </div>
+
+                <div class="scenario-card scenario-negative">
+                    <div class="scenario-header">
+                        <h3 class="scenario-title" style="color: #C62828;">🔴 ESCENARIO NEGATIVO</h3>
+                        <div class="scenario-probability" style="color: #C62828;">30% Probabilidad</div>
+                    </div>
+                    <p><strong>Descripción:</strong> Gobierno sufre revés importante. Derrota amplia en PBA, oposición fortalecida complica agenda reformista.</p>
+                    
+                    <div class="impact-grid">
+                        <div class="impact-item">
+                            <div class="impact-label">BONOS SOBERANOS</div>
+                            <div class="impact-value" style="color: #F44336;">-10 puntos</div>
+                            <div class="impact-description">GD30 hacia 50 centavos o menos</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-label">ACCIONES LOCALES</div>
+                            <div class="impact-value" style="color: #F44336;">-20-30%</div>
+                            <div class="impact-description">Sell-off pronunciado, iliquidez</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-label">TIPO DE CAMBIO</div>
+                            <div class="impact-value" style="color: #F44336;">Devaluación</div>
+                            <div class="impact-description">Ruptura banda, salto 20-30%</div>
+                        </div>
+                    </div>
+                    
+                    <p style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <strong>Implicaciones:</strong> Dificultades refinanciamiento deuda 2025-26. Riesgo país >1000 pb. Posible regreso controles cambiarios y políticas heterodoxas.
+                    </p>
+                </div>
+
+                <div class="scenario-card scenario-positive">
+                    <div class="scenario-header">
+                        <h3 class="scenario-title" style="color: #2E7D32;">🟢 ESCENARIO OPTIMISTA - "Sorpresa"</h3>
+                        <div class="scenario-probability" style="color: #2E7D32;">25% Probabilidad</div>
+                    </div>
+                    <p><strong>Descripción:</strong> LLA arrasaría inesperadamente. Victoria en bastiones peronistas, mayoría simple en Diputados.</p>
+                    
+                    <div class="impact-grid">
+                        <div class="impact-item">
+                            <div class="impact-label">BONOS SOBERANOS</div>
+                            <div class="impact-value" style="color: #4CAF50;">+25-35%</div>
+                            <div class="impact-description">Rally hacia 70-80 centavos</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-label">ACCIONES LOCALES</div>
+                            <div class="impact-value" style="color: #4CAF50;">+40-60%</div>
+                            <div class="impact-description">Overshooting alcista, flujos externos</div>
+                        </div>
+                        <div class="impact-item">
+                            <div class="impact-label">TIPO DE CAMBIO</div>
+                            <div class="impact-value" style="color: #4CAF50;">Apreciación</div>
+                            <div class="impact-description">Entrada capitales, peso fortalecido</div>
+                        </div>
+                    </div>
+                    
+                    <p style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <strong>Implicaciones:</strong> Espaldarazo contundente a políticas liberales. Ingreso masivo de capitales. Riesgo país hacia 500-600 pb. Argentina re-rating internacional.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Impacto por Activo - Bonos -->
+        <div class="slide">
+            <div class="section-title">
+                <span>📊</span>
+                BONOS SOBERANOS - ANÁLISIS DE SENSIBILIDAD
+            </div>
+            <div class="content">
+                <div class="chart-container">
+                    <div class="chart-wrapper">
+                        <canvas id="bondScenarioChart"></canvas>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <h4 style="color: #5D4E3A;">Impacto Esperado por Escenario</h4>
+                        </div>
+                    </div>
+                    <div class="chart-details">
+                        <div class="legend-item">
+                            <div class="legend-label">
+                                <div class="legend-color" style="background: #4CAF50;"></div>
+                                Escenario Optimista
+                            </div>
+                            <div class="legend-value">70-80¢</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-label">
+                                <div class="legend-color" style="background: #D4AF37;"></div>
+                                Escenario Base
+                            </div>
+                            <div class="legend-value">65-70¢</div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-label">
+                                <div class="legend-color" style="background: #F44336;"></div>
+                                Escenario Negativo
+                            </div>
+                            <div class="legend-value">45-50¢</div>
+                        </div>
+                        
+                        <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                            <h5 style="color: #5D4E3A; margin-bottom: 15px;">🎯 Bonos Recomendados</h5>
+                            <div style="margin-bottom: 10px;">
+                                <strong>GD41 (2041):</strong> Mayor potencial upside por duration larga
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <strong>GD30 (2030):</strong> Menor volatilidad, perspectiva pago 2030
+                            </div>
+                            <div>
+                                <strong>GD38 (2038):</strong> Balance riesgo-retorno intermedio
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding: 20px; background: #E8F5E8; border-radius: 10px; border-left: 4px solid #4CAF50;">
+                            <h5 style="color: #2E7D32; margin-bottom: 10px;">💡 Insight Clave</h5>
+                            <p style="color: #2E7D32; margin: 0; font-size: 0.95rem;">
+                                Precios actuales (~60¢) incorporan escenario adverso posiblemente sobredimensionado. 
+                                Potencial de "compresión rápida" de 300-350 pb extra si resultado no es catastrófico.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: #FFF8E1; padding: 25px; border-radius: 15px; margin-top: 30px; border-left: 5px solid #D4AF37;">
+                    <h4 style="color: #B8860B; margin-bottom: 15px;">📋 Sensibilidad por Vencimiento</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 8px;">
+                            <strong>Bonos Cortos (2030)</strong><br>
+                            <span style="color: #666; font-size: 0.9rem;">Menor volatilidad<br>Mejor perspectiva pago</span>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.7); border-radius: 8px;">
+                            <strong>Bonos Largos (2041)</strong><br>
+                            <span style="color: #666; font-size: 0.9rem;">Mayor beta<br>Upside superior si normaliza</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Impacto por Activo - Acciones -->
+        <div class="slide">
+            <div class="section-title">
+                <span>📈</span>
+                ACCIONES ARGENTINAS - OPORTUNIDADES SECTORIALES
+            </div>
+            <div class="content">
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="showTab('galicia-tab')">Banco Galicia</button>
+                    <button class="tab-btn" onclick="showTab('vista-tab')">Vista Energy</button>
+                    <button class="tab-btn" onclick="showTab('loma-tab')">Loma Negra</button>
+                </div>
+
+                <div id="galicia-tab" class="tab-content active">
+                    <div class="chart-container">
+                        <div class="chart-wrapper">
+                            <canvas id="galiciaChart"></canvas>
+                        </div>
+                        <div class="chart-details">
+                            <h4 style="color: #5D4E3A; margin-bottom: 20px;">🏦 Banco Galicia (GGAL)</h4>
+                            <div style="background: #E3F2FD; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                                <h5 style="color: #1976D2;">Tesis de Inversión</h5>
+                                <p style="color: #1976D2; font-size: 0.95rem; margin: 0;">
+                                    Mayor banco privado del país. Barómetro de economía doméstica. 
+                                    Resultado electoral favorable implicaría menos intervención estatal, 
+                                    regulación amigable y eventual repunte del crédito privado.
+                                </p>
+                            </div>
+                            
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                                <h5 style="color: #5D4E3A;">Factores Clave</h5>
+                                <div style="margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <span><strong>Crédito/PBI Argentina:</strong></span>
+                                    <span style="color: #D4AF37; font-weight: 600;">13% (más bajo LATAM)</span>
+                                </div>
+                                <div style="margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <span><strong>Potencial Expansión:</strong></span>
+                                    <span style="color: #4CAF50; font-weight: 600;">Alto si se estabiliza</span>
+                                </div>
+                                <div style="margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <span><strong>Riesgo Controles:</strong></span>
+                                    <span style="color: #FF9800; font-weight: 600;">Bajo pero latente</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="vista-tab" class="tab-content">
+                    <div class="chart-container">
+                        <div class="chart-wrapper">
+                            <canvas id="vistaChart"></canvas>
+                        </div>
+                        <div class="chart-details">
+                            <h4 style="color: #5D4E3A; margin-bottom: 20px;">🛢️ Vista Energy (VIST)</h4>
+                            <div style="background: #E8F5E8; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                                <h5 style="color: #2E7D32;">Tesis de Inversión</h5>
+                                <p style="color: #2E7D32; font-size: 0.95rem; margin: 0;">
+                                    Petrolera enfocada en Vaca Muerta. Ingresos ligados a precio internacional 
+                                    del petróleo. Gobierno LLA fortalecido aceleraría liberación mercado 
+                                    energético y eliminación de retenciones.
+                                </p>
+                            </div>
+                            
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                                <h5 style="color: #5D4E3A;">Factores Clave</h5>
+                                <div style="margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <span><strong>EV/EBITDA:</strong></span>
+                                    <span style="color: #4CAF50; font-weight: 600;">~7x (vs pares globales)</span>
+                                </div>
+                                <div style="margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <span><strong>Retenciones Actuales:</strong></span>
+                                    <span style="color: #FF9800; font-weight: 600;">Impacto en netback</span>
+                                </div>
+                                <div style="margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <span><strong>Vaca Muerta Potential:</strong></span>
+                                    <span style="color: #4CAF50; font-weight: 600;">Crecimiento producción</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="loma-tab" class="tab-content">
+                    <div class="chart-container">
+                        <div class="chart-wrapper">
+                            <canvas id="lomaChart"></canvas>
+                        </div>
+                        <div class="chart-details">
+                            <h4 style="color: #5D4E3A; margin-bottom: 20px;">🏗️ Loma Negra (LOMA)</h4>
+                            <div style="background: #FFF8E1; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                                <h5 style="color: #E65100;">Tesis de Inversión</h5>
+                                <p style="color: #E65100; font-size: 0.95rem; margin: 0;">
+                                    Principal productor de cemento. Termómetro inversión construcción. 
+                                    Gobierno fortalecido implicaría reactivación obra pública pro-inversión 
+                                    y eventual resurgimiento crédito hipotecario.
+                                </p>
+                            </div>
+                            
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                                <h5 style="color: #5D4E3A;">Factores Clave</h5>
+                                <div style="margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <span><strong>EV/EBITDA:</strong></span>
+                                    <span style="color: #4CAF50; font-weight: 600;">~5x (múltiplos bajos)</span>
+                                </div>
+                                <div style="margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <span><strong>Crédito Hipotecario:</strong></span>
+                                    <span style="color: #FF9800; font-weight: 600;">Prácticamente inexistente</span>
+                                </div>
+                                <div style="margin: 10px 0; display: flex; justify-content: space-between;">
+                                    <span><strong>Obra Pública:</strong></span>
+                                    <span style="color: #4CAF50; font-weight: 600;">Potencial infraestructura</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Tipo de Cambio y Política Monetaria -->
+        <div class="slide">
+            <div class="section-title">
+                <span>💵</span>
+                MERCADO CAMBIARIO - EQUILIBRIO FRÁGIL
+            </div>
+            <div class="content">
+                <div class="chart-container">
+                    <div class="chart-wrapper">
+                        <canvas id="exchangeChart"></canvas>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <h4 style="color: #5D4E3A;">Evolución Tipo de Cambio 2025</h4>
+                        </div>
+                    </div>
+                    <div class="chart-details">
+                        <div style="background: #E3F2FD; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h5 style="color: #1976D2;">🎯 Situación Actual</h5>
+                            <div style="margin: 15px 0;">
+                                <div style="display: flex; justify-content: space-between; margin: 8px 0;">
+                                    <span><strong>USD Oficial:</strong></span>
+                                    <span style="color: #D4AF37; font-weight: 600;">$1.360 ARS</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin: 8px 0;">
+                                    <span><strong>Techo Banda:</strong></span>
+                                    <span style="color: #FF9800; font-weight: 600;">$1.467 ARS</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; margin: 8px 0;">
+                                    <span><strong>USD MEP/CCL:</strong></span>
+                                    <span style="color: #4CAF50; font-weight: 600;">$1.365-1.372</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #FFF8E1; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h5 style="color: #E65100;">🔄 Intervención del Tesoro</h5>
+                            <p style="color: #E65100; font-size: 0.95rem; margin: 0;">
+                                Tesoro vendió USD 156M en agosto para contener presión. 
+                                Futuros ROFEX anticipan 7% adicional hacia octubre. 
+                                Reservas líquidas BCRA bajas pero Tesoro mantiene ~USD 1.500M.
+                            </p>
+                        </div>
+                        
+                        <div style="background: #FFEBEE; padding: 20px; border-radius: 10px;">
+                            <h5 style="color: #C62828;">⚠️ Riesgos Post-Electorales</h5>
+                            <div style="color: #C62828; font-size: 0.95rem;">
+                                <div style="margin: 8px 0;">• <strong>Escenario negativo:</strong> Ruptura banda, salto 20-30%</div>
+                                <div style="margin: 8px 0;">• <strong>Tasas insostenibles:</strong> TEA >50% no puede mantenerse</div>
+                                <div style="margin: 8px 0;">• <strong>Reservas limitadas:</strong> Arsenal intervencionista acotado</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #E8EAF6, #C5CAE9); padding: 30px; border-radius: 20px; margin-top: 30px;">
+                    <h4 style="color: #3F51B5; margin-bottom: 20px; text-align: center;">🎲 Escenarios Cambiarios Post-Octubre</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                        <div style="background: rgba(255,255,255,0.8); padding: 20px; border-radius: 10px; text-align: center;">
+                            <h5 style="color: #4CAF50;">Resultado Favorable</h5>
+                            <p style="color: #2E7D32; font-size: 0.9rem; margin: 0;">
+                                Deslizamiento controlado<br>
+                                Posible fortalecimiento peso<br>
+                                Entrada capitales productivos
+                            </p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.8); padding: 20px; border-radius: 10px; text-align: center;">
+                            <h5 style="color: #FF9800;">Resultado Mixto</h5>
+                            <p style="color: #E65100; font-size: 0.9rem; margin: 0;">
+                                Corrección ordenada 10-15%<br>
+                                Ajuste hacia nueva realidad<br>
+                                Mantenimiento banda ampliada
+                            </p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.8); padding: 20px; border-radius: 10px; text-align: center;">
+                            <h5 style="color: #F44336;">Resultado Adverso</h5>
+                            <p style="color: #C62828; font-size: 0.9rem; margin: 0;">
+                                Ruptura esquema actual<br>
+                                Devaluación 20-30%+<br>
+                                Riesgo controles adicionales
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Recomendaciones Estratégicas -->
+        <div class="slide">
+            <div class="section-title">
+                <span>🎯</span>
+                RECOMENDACIONES ESTRATÉGICAS Y POSICIONAMIENTO
+            </div>
+            <div class="content">
+                <div class="risk-matrix">
+                    <div class="risk-card risk-low">
+                        <div class="risk-level" style="color: #2E7D32;">🟢 ESTRATEGIA AGRESIVA</div>
+                        <h4>Para inversores con convicción en continuidad LLA</h4>
+                        <p><strong>Posicionamiento:</strong> Entrada escalonada en bonos largos (GD38, GD41) y acciones líderes (GGAL, VIST, LOMA).</p>
+                        <p><strong>Rationale:</strong> Precios actuales incorporan mucho pesimismo. Potencial upside significativo si escenario base se materializa.</p>
+                        <div style="background: rgba(76,175,80,0.1); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <strong>Target Allocation:</strong> 60-70% bonos USD, 30-40% acciones selectas
+                        </div>
+                    </div>
+                    
+                    <div class="risk-card risk-medium">
+                        <div class="risk-level" style="color: #E65100;">🟡 ESTRATEGIA BALANCEADA</div>
+                        <h4>Para inversores cautelosos pero optimistas</h4>
+                        <p><strong>Posicionamiento:</strong> Diversificación entre bonos cortos (GD30), acciones defensivas y cobertura cambiaria parcial.</p>
+                        <p><strong>Rationale:</strong> Capturar upside potencial pero con menor exposición a escenarios negativos.</p>
+                        <div style="background: rgba(255,152,0,0.1); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <strong>Target Allocation:</strong> 40% bonos, 30% acciones, 30% cobertura/cash
+                        </div>
+                    </div>
+                    
+                    <div class="risk-card risk-high">
+                        <div class="risk-level" style="color: #C62828;">🔴 ESTRATEGIA DEFENSIVA</div>
+                        <h4>Para inversores adversos al riesgo político</h4>
+                        <p><strong>Posicionamiento:</strong> Minimizar exposición hasta definiciones electorales. Solo empresas exportadoras resilientes.</p>
+                        <p><strong>Rationale:</strong> Preservar capital ante alta volatilidad esperada. Re-entry post clarificación.</p>
+                        <div style="background: rgba(244,67,54,0.1); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <strong>Target Allocation:</strong> 20% bonos cortos, 10% acciones, 70% cobertura
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #FFF8E1, #FFF3C4); padding: 30px; border-radius: 20px; margin-top: 30px; border-left: 5px solid #D4AF37;">
+                    <h4 style="color: #B8860B; margin-bottom: 20px;">💡 Conclusiones Clave del Análisis</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div>
+                            <h5 style="color: #8B7B6B;">📈 Oportunidad de Entrada</h5>
+                            <ul style="color: #666; margin: 0; padding-left: 20px;">
+                                <li>Valuaciones incorporan escenario adverso posiblemente sobredimensionado</li>
+                                <li>Bonos en niveles de stress (60¢) con rendimientos >15%</li>
+                                <li>Acciones con P/E 7.9x vs promedios históricos</li>
+                                <li>Potencial "compresión rápida" spreads si no hay catástrofe</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 style="color: #8B7B6B;">⚠️ Riesgos a Gestionar</h5>
+                            <ul style="color: #666; margin: 0; padding-left: 20px;">
+                                <li>30% probabilidad escenario negativo con impacto severo</li>
+                                <li>Volatilidad extrema esperada en período electoral</li>
+                                <li>Mercado cambiario bajo presión, reservas limitadas</li>
+                                <li>Iliquidez puede amplificar movimientos bajistas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.7); padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center;">
+                        <strong style="color: #B8860B; font-size: 1.1rem;">
+                            "Argentina 2025 ofrece oportunidad de alto riesgo/alto retorno atada al vaivén político. 
+                            La clave será mantener flexibilidad y una mirada de mediano plazo."
+                        </strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Footer -->
+        <div class="slide">
+            <div class="footer">
+                <div style="margin-bottom: 40px;">
+                    <svg width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="margin-bottom: 20px;">
+                        <defs>
+                            <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#FFFFFF"/>
+                                <stop offset="100%" style="stop-color:#FFFFFF"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M20 80 L50 20 L80 80" stroke="url(#footerLogoGradient)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M35 80 L50 50 L65 80" stroke="url(#footerLogoGradient)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div style="font-size: 1.4rem; font-weight: 300; letter-spacing: 3px; margin-bottom: 20px;">ALCHEMY VALORES</div>
+                    <h3 style="font-size: 2rem; margin-bottom: 15px;">Análisis Electoral 2025</h3>
+                </div>
+                
+                <div style="margin: 40px 0; padding: 30px; background: rgba(255,255,255,0.1); border-radius: 15px;">
+                    <h4 style="color: white; margin-bottom: 20px; font-size: 1.4rem;">📅 Fechas Críticas a Monitorear</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; text-align: left;">
+                        <div>
+                            <strong style="color: #F4D03F;">7 de Septiembre</strong><br>
+                            <span style="opacity: 0.9;">Elección Provincia Buenos Aires</span>
+                        </div>
+                        <div>
+                            <strong style="color: #F4D03F;">26 de Octubre</strong><br>
+                            <span style="opacity: 0.9;">Elecciones Legislativas Nacionales</span>
+                        </div>
+                        <div>
+                            <strong style="color: #F4D03F;">Noviembre 2025</strong><br>
+                            <span style="opacity: 0.9;">Definición agenda reformas</span>
+                        </div>
+                        <div>
+                            <strong style="color: #F4D03F;">Diciembre 2025</strong><br>
+                            <span style="opacity: 0.9;">Normalización tasas monetarias</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="disclaimer">
+                    <h4 style="margin-bottom: 15px;">⚖️ Consideraciones Legales</h4>
+                    <p style="line-height: 1.8; text-align: left;">
+                        <strong>Naturaleza del Análisis:</strong> Este informe representa un análisis de escenarios probables basado en información pública disponible y no constituye recomendación de inversión personalizada.<br>
+                        <strong>Riesgos:</strong> Los mercados emergentes como Argentina presentan alta volatilidad. Las inversiones pueden resultar en pérdidas significativas.<br>
+                        <strong>Incertidumbre Electoral:</strong> Los resultados electorales son inherentemente impredecibles. Los escenarios presentados son estimaciones sujetas a cambios.<br>
+                        <strong>Consulta Profesional:</strong> Se recomienda consultar con un asesor financiero antes de tomar decisiones de inversión.
+                    </p>
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #D4AF37, #F4D03F); border-radius: 15px; color: #5D4E3A;">
+                    <h4 style="margin-bottom: 10px; color: #5D4E3A;">🔬 Metodología de Análisis</h4>
+                    <p style="margin: 0; font-weight: 600;">
+                        Análisis basado en datos de mercado, encuestas electorales, precedentes históricos 
+                        y modelos de sensibilidad de activos financieros ante eventos políticos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para cambiar tabs
+        function showTab(tabId) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remover clase active de todos los botones
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Mostrar el contenido seleccionado
+            document.getElementById(tabId).classList.add('active');
+            
+            // Activar el botón correspondiente
+            event.target.classList.add('active');
+        }
+
+        // Gráfico de Escenarios para Bonos
+        const bondCtx = document.getElementById('bondScenarioChart').getContext('2d');
+        const bondChart = new Chart(bondCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Precio Actual', 'Escenario Negativo', 'Escenario Base', 'Escenario Optimista'],
+                datasets: [{
+                    label: 'GD30 (centavos por dólar)',
+                    data: [60, 50, 67, 75],
+                    backgroundColor: ['#8B7B6B', '#F44336', '#D4AF37', '#4CAF50'],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y + ' centavos';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 80,
+                        title: {
+                            display: true,
+                            text: 'Precio (centavos por USD)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráficos para acciones
+        const galiciaCtx = document.getElementById('galiciaChart').getContext('2d');
+        const galiciaChart = new Chart(galiciaCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
+                datasets: [{
+                    label: 'GGAL (USD)',
+                    data: [100, 95, 85, 80, 75, 70, 65, 58, 55],
+                    borderColor: '#D4AF37',
+                    backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Precio Relativo (Base 100)'
+                        }
+                    }
+                }
+            }
+        });
+
+        const vistaCtx = document.getElementById('vistaChart').getContext('2d');
+        const vistaChart = new Chart(vistaCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
+                datasets: [{
+                    label: 'VIST (USD)',
+                    data: [100, 105, 95, 90, 85, 82, 78, 72, 70],
+                    borderColor: '#4CAF50',
+                    backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Precio Relativo (Base 100)'
+                        }
+                    }
+                }
+            }
+        });
+
+        const lomaCtx = document.getElementById('lomaChart').getContext('2d');
+        const lomaChart = new Chart(lomaCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep'],
+                datasets: [{
+                    label: 'LOMA (USD)',
+                    data: [100, 92, 88, 85, 80, 75, 72, 68, 65],
+                    borderColor: '#FF9800',
+                    backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'Precio Relativo (Base 100)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico Tipo de Cambio
+        const exchangeCtx = document.getElementById('exchangeChart').getContext('2d');
+        const exchangeChart = new Chart(exchangeCtx, {
+            type: 'line',
+            data: {
+                labels: ['Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct (Proj)', 'Nov (Proj)'],
+                datasets: [
+                    {
+                        label: 'USD Oficial',
+                        data: [1050, 1150, 1200, 1320, 1350, 1360, 1400, 1440],
+                        borderColor: '#D4AF37',
+                        backgroundColor: 'rgba(212, 175, 55, 0.1)',
+                        tension: 0.4,
+                        fill: false
+                    },
+                    {
+                        label: 'USD MEP',
+                        data: [1080, 1170, 1220, 1340, 1365, 1372, 1420, 1480],
+                        borderColor: '#4CAF50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        tension: 0.4,
+                        fill: false,
+                        borderDash: [5, 5]
+                    },
+                    {
+                        label: 'Techo Banda',
+                        data: [1200, 1300, 1350, 1450, 1460, 1467, 1467, 1467],
+                        borderColor: '#F44336',
+                        backgroundColor: 'rgba(244, 67, 54, 0.1)',
+                        tension: 0.4,
+                        fill: false,
+                        borderDash: [10, 5]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: 'ARS por USD'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Animaciones al cargar
+        window.addEventListener('load', function() {
+            // Agregar efectos de hover adicionales
+            const cards = document.querySelectorAll('.summary-card, .scenario-card, .risk-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+        });
+
+        // Scroll suave para navegación
+        function scrollToSlide(slideNumber) {
+            const slides = document.querySelectorAll('.slide');
+            if (slides[slideNumber - 1]) {
+                slides[slideNumber - 1].scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start' 
+                });
+            }
+        }
+    </script>
+</body>
+</html>
